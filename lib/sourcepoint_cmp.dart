@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:sourcepoint_cmp/consent_action.dart';
 
 import 'action_type.dart';
 import 'gdpr_user_consent.dart';
@@ -36,7 +37,7 @@ class SourcepointCmp {
   /// called when the Dialog message is about to disappear
   final void Function()? onConsentUIFinished;
 
-  final void Function(ActionType? actionType)? onAction;
+  final void Function(ConsentAction? action)? onAction;
 
   SourcepointCmp({
     required this.accountId,
@@ -63,8 +64,11 @@ class SourcepointCmp {
         break;
       case 'onAction':
         final int code = call.arguments['actionType'];
+        final String? customActionId = call.arguments['customActionId'];
         final actionType = actionTypeFromCode(code);
-        this.onAction!(actionType);
+
+        final action = ConsentAction(actionType, customActionId: customActionId);
+        this.onAction!(action);
         break;
       case 'onConsentReady':
         GDPRUserConsent consent = GDPRUserConsent(
@@ -109,6 +113,17 @@ class SourcepointCmp {
         'propertyId': propertyId,
         'propertyName': propertyName,
         'pmId': pmId
+      });
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  /// Hide View
+  Future<void> hideView() async {
+    try {
+      print('hide cmp');
+      _channel.invokeMethod('hideView', <String, dynamic>{
       });
     } on PlatformException catch (e) {
       print(e);

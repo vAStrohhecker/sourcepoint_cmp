@@ -1,4 +1,5 @@
 enum ActionType {
+  CUSTOM,
   SHOW_OPTIONS,
   REJECT_ALL,
   ACCEPT_ALL,
@@ -11,6 +12,7 @@ ActionType? actionTypeFromCode(int? code) {
   if (code == null) return null;
 
   switch (code) {
+    case 9: return ActionType.CUSTOM;
     case 12: return ActionType.SHOW_OPTIONS;
     case 13: return ActionType.REJECT_ALL;
     case 11: return ActionType.ACCEPT_ALL;
