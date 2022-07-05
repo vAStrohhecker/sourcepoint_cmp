@@ -31,16 +31,15 @@ import org.json.JSONObject
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 
-class SourcepointCmp(registrar: PluginRegistry.Registrar, private val channel: MethodChannel, private val activity: Activity) :
+class SourcepointCmp(private val channel: MethodChannel) :
     MethodChannel.MethodCallHandler {
 
     //    private val TAG = "**MainActivity"
     private var TAG: String = SourcepointCmp::class.java.name
     private var mainViewGroup: ViewGroup? = null
     private var currentView: View? = null
-    private var context = registrar.context()
     private var spConsentLib: SpConsentLib? = null
-
+    lateinit var activity: Activity
 //    private val spConsentLib by spConsentLibLazy {
 //        activity
 //        spClient = LocalClient()
@@ -53,18 +52,6 @@ class SourcepointCmp(registrar: PluginRegistry.Registrar, private val channel: M
                 Log.i(TAG, "onConsentReady")
                 Log.i(TAG, "consentString: " + consent.gdpr?.consent.toString())
                 Log.i(TAG, consent.gdpr.toString())
-//                for (vendorId in consent.acceptedVendors) {
-//                    Log.i(TAG, "The vendor $vendorId was accepted.")
-//                }
-//                for (purposeId in consent.acceptedCategories) {
-//                    Log.i(TAG, "The category $purposeId was accepted.")
-//                }
-//                for (purposeId in consent.legIntCategories) {
-//                    Log.i(TAG, "The legIntCategory $purposeId was accepted.")
-//                }
-//                for (specialFeatureId in consent.specialFeatures) {
-//                    Log.i(TAG, "The specialFeature $specialFeatureId was accepted.")
-//                }
             }
 
             val grants = consent.gdpr?.consent?.grants
@@ -164,11 +151,11 @@ class SourcepointCmp(registrar: PluginRegistry.Registrar, private val channel: M
 
 
     private fun load(call: MethodCall, result: MethodChannel.Result) {
-        val arguments: Map<String, Any> = call.arguments()
-        val accountIdVal: Int = arguments["accountId"] as Int
-        val propertyIdVal = arguments["propertyId"] as Int
-        val propertyNameVal: String = arguments["propertyName"] as String
-        val pmId = arguments["pmId"] as String
+        val arguments: Map<String, Any>? = call.arguments()
+        val accountIdVal: Int = arguments?.get("accountId") as Int
+        val propertyIdVal = arguments?.get("propertyId") as Int
+        val propertyNameVal: String = arguments?.get("propertyName") as String
+        val pmId = arguments?.get("pmId") as String
 
         if (this.spConsentLib == null) {
 
@@ -210,12 +197,12 @@ class SourcepointCmp(registrar: PluginRegistry.Registrar, private val channel: M
     }
 
     private fun showPM(call: MethodCall, result: MethodChannel.Result) {
-        val arguments: Map<String, Any> = call.arguments()
+        val arguments: Map<String, Any>? = call.arguments()
 
-        val accountIdVal = arguments["accountId"] as Int
-        val propertyId = arguments["propertyId"] as Int
-        val propertyNameVal = arguments["propertyName"] as String
-        val pmIdVal = arguments["pmId"] as String
+        val accountIdVal = arguments?.get("accountId") as Int
+        val propertyId = arguments?.get("propertyId") as Int
+        val propertyNameVal = arguments?.get("propertyName") as String
+        val pmIdVal = arguments?.get("pmId") as String
 
 
         if (this.spConsentLib == null) {
