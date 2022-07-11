@@ -77,7 +77,9 @@ class SourcepointCmp(private val channel: MethodChannel) :
 
         override fun onError(error: Throwable) {
             Log.e(TAG, "Something went wrong: ", error)
-            channel.invokeMethod("onError", error.toString())
+            this@SourcepointCmp.activity.runOnUiThread {
+                channel.invokeMethod("onError", error.toString())
+            }
         }
 
         override fun onMessageReady(message: JSONObject) {
@@ -157,6 +159,8 @@ class SourcepointCmp(private val channel: MethodChannel) :
         val propertyNameVal: String = arguments?.get("propertyName") as String
         val pmId = arguments?.get("pmId") as String
 
+        Log.i(TAG, "show consent")
+
         if (this.spConsentLib == null) {
 
 
@@ -198,6 +202,8 @@ class SourcepointCmp(private val channel: MethodChannel) :
 
     private fun showPM(call: MethodCall, result: MethodChannel.Result) {
         val arguments: Map<String, Any>? = call.arguments()
+
+        Log.i(TAG, "showPM")
 
         val accountIdVal = arguments?.get("accountId") as Int
         val propertyId = arguments?.get("propertyId") as Int

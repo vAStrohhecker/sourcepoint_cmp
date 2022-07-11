@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sourcepoint_cmp/consent_action.dart';
 
 import 'package:sourcepoint_cmp/sourcepoint_cmp.dart';
 
@@ -33,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           debugPrint('Consent string: ${consent.consentString}');
           debugPrint('Consent action is taken and returned to Sourcepoint');
         },
-        onAction: (ActionType action) {
+        onAction: (ConsentAction action) {
           debugPrint('onAction(${action.toString()})');
         },
         onError: (errorCode) {
