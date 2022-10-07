@@ -55,13 +55,7 @@ class _MyAppState extends State<MyApp> {
           body: Column(
             children: [
               Center(
-                child: FlatButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  disabledColor: Colors.grey,
-                  disabledTextColor: Colors.black,
-                  padding: EdgeInsets.all(8.0),
-                  splashColor: Colors.blueAccent,
+                child: ElevatedButton(
                   onPressed: () {
                     _sourcepointCmp.showPM();
                   },
