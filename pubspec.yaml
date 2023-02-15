@@ -1,6 +1,6 @@
 name: sourcepoint_cmp
 description: Sourcepoint Android & iOS Plugin with Flutter.
-version: 0.1.2
+version: 0.1.3
 homepage: https://github.com/cschellhas/sourcepoint_cmp
 
 environment:
